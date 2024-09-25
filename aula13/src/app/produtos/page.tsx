@@ -1,3 +1,4 @@
+import Link from "next/link";
 
 export default function Produtos() {
 
@@ -29,7 +30,7 @@ export default function Produtos() {
                             <td>{lanche.nome}</td>
                             <td>{lanche.preco}</td>
                             <td>{lanche.desc}</td>
-                            <td><button>Editar</button></td>
+                            <td> <Link href= {`/produtos/produto/${lanche.id}`}> Editar </Link> </td>
                         </tr>
                     ))}
                 </tbody>
