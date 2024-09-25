@@ -1,3 +1,4 @@
+import { link } from "fs";
 
 export default function Produtos() {
 
@@ -29,7 +30,8 @@ export default function Produtos() {
                             <td>{lanche.nome}</td>
                             <td>{lanche.preco}</td>
                             <td>{lanche.desc}</td>
-                            <td><button>Editar</button></td>
+                            <td> <link href={`/produtos/produto/${lanche.id}`}>Editar</link></td>
+                            {/* <td><button>Editar</button></td> */}
                         </tr>
                     ))}
                 </tbody>
