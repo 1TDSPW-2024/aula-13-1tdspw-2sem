@@ -2,7 +2,6 @@ import { NextResponse } from "next/server";
 import { promises as fs } from "fs";
 import { TipoLanche } from "@/types";
 
-
 export async function GET() {
     const file = await fs.readFile(process.cwd() + '/src/data/base.json','utf-8');
     const data = JSON.parse(file);
