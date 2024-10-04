@@ -1,7 +1,7 @@
 "use client";
 import { TipoLanche } from "@/types";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 
 export default function CadLanche() {
 
@@ -76,11 +76,13 @@ export default function CadLanche() {
       <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="nome">Nome do Lanche:</label>
-          <input
+        
+         <input
             type="text"
             id="nome"
             name="nome"
             value={produtos.nome} onChange={(e) => handleChange(e)} required />
+       
         </div>
         <div>
           <label htmlFor="preco">Preço:</label>
@@ -100,6 +102,9 @@ export default function CadLanche() {
         </div>
         <button type="submit">Cadastrar Lanche</button>
       </form>
+
+
+
     </div>
   );
 }

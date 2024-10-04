@@ -1,9 +1,10 @@
 "use client"
 import { TipoLanche } from "@/types";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 
 export default function Produtos() {
+
 
     const [lista,setLista] = useState<TipoLanche[]>([]);
 
@@ -22,6 +23,8 @@ export default function Produtos() {
     
     return (
         <div>
+            <Suspense fallback={<p>Loading a ...</p>}>
+       
             <h2>Produtos</h2>
             <table>
                 <thead>
@@ -52,7 +55,7 @@ export default function Produtos() {
                     </tr>
                 </tfoot>
             </table>
-
+</Suspense>
         </div>
     )
 }
