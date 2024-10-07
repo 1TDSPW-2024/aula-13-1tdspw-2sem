@@ -1,24 +1,56 @@
 import client from "../../../../lib/appwrite_client";
 import { NextResponse } from "next/server";
-import { promises as fs } from "fs";
 import { TipoLanche } from "@/types";
 import { Databases, ID, Query } from "appwrite";
 
-
 const database = new Databases(client);
 
+
+export async function atualizandoLanche(lanche:TipoLanche){
+    try {
+
+        const response = await database.updateDocument(process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID as string,
+            process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_TBL_1 as string,
+            ID.unique(),
+            lanche);
+
+        return response;
+    } catch (error) {
+        console.error("Erro atualizando a tabela lanche", error);
+        throw new Error("Falha em criar a tabela lanche.")
+    }
+}
+
+export async function PUT(request:Request) {
+    
+}
+
+
 //CRIANDO O LANCHE NA BASE
-export async function createLanche(lanche:TipoLanche) {
+export async function createLanche(lanche: TipoLanche) {
     try {
         const response = await database.createDocument(process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID as string,
             process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_TBL_1 as string,
-              ID.unique(), 
-              lanche);
+            ID.unique(),
+            lanche);
 
-              return response;
+        return response;
     } catch (error) {
         console.error("Erro criando a tabela geladeira", error);
         throw new Error("Falha em criar a tabela geladeira.")
+    }
+}
+
+export async function POST(request: Request) {
+    try {
+        const { nome, preco, desc } = await request.json();
+        const lanche = { nome, preco, desc } as TipoLanche;
+        const response = await createLanche(lanche);
+
+        return NextResponse.json({ msg: "Lanche criado." }, { status: 201 });
+
+    } catch (error) {
+        return NextResponse.json({ error: "Falha na criação do Lanche." }, { status: 500 });
     }
 }
 
@@ -27,9 +59,9 @@ export async function pegandoLanche() {
     try {
         const response = await database.listDocuments(process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID as string,
             process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_TBL_1 as string,
-              [Query.orderDesc("$createdAt")]);
+            [Query.orderDesc("$createdAt")]);//Ordena os dados pela data de criação
 
-              return response.documents;
+        return response.documents;
     } catch (error) {
         console.error("Erro pegando a tabela geladeira", error);
         throw new Error("Falha em ler a tabela geladeira.")
@@ -37,30 +69,17 @@ export async function pegandoLanche() {
 }
 
 export async function GET() {
-    
-    try{
-        const lanches = await pegandoLanche();    
+
+    try {
+        const lanches = await pegandoLanche();
         return NextResponse.json(lanches);
-    
-        }catch(error){
-            return NextResponse.json({error:"Falha na listagem dos Lanches."},{status:500});
-        }
 
-}
-
-export async function POST(request: Request) {
-
-    try{
-    const {nome, preco, desc } = await request.json();
-    const lanche = {nome, preco, desc } as TipoLanche;
-    const response = await createLanche(lanche);
-    
-    return NextResponse.json({msg:"Lanche criado."},{status:201});
-
-    }catch(error){
-        return NextResponse.json({error:"Falha na criação do Lanche."},{status:500});
+    } catch (error) {
+        return NextResponse.json({ error: "Falha na listagem dos Lanches." }, { status: 500 });
     }
+
 }
+
 
 
 
