@@ -10,10 +10,4 @@ export async function GET(request:Request, {params}:{params:{id:number}}) {
     return NextResponse.json(produto);
 }
 
-export async function PUT(request:Request,{params}:{params:{id:number}}) {
-
-    const {msg} = await request.json();
-    
-    return NextResponse.json({msg:msg},{status:204});
-}
 
