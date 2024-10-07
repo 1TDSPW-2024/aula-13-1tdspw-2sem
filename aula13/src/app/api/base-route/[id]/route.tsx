@@ -1,5 +1,5 @@
 
-import client from "../../../../../lib/appwrite_client"; 
+import client from "../../../../lib/appwrite_client"; 
 import { NextResponse } from "next/server";
 import { TipoLanche } from "@/types";
 import { Databases} from "appwrite";
